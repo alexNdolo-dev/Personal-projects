@@ -1,24 +1,43 @@
-const list = document.getElementById('u-l')
-const addBtn = document.getElementById('btn')
-const input = document.getElementById('input')
-const errorMsg = document.getElementById('error-msg')
+let inputEl = document.getElementById('result');
+let equalEl = document.getElementById('equal');
+let clearEl = document.getElementById('clear');
+let delEl = document.getElementById('delete');
+let numberButtons = document.querySelectorAll('.num');
+let operatorButtons = document.querySelectorAll('.cal');
+let decimalEl = document.getElementById('decimal');
+let percentEl = document.getElementById('percent');
 
-input.addEventListener('keypress', function(e){
-    if(e.key === 'Enter'){
-        addBtn.click()
-    }
+numberButtons.forEach(function(button){
+    button.addEventListener('click', function(){
+        inputEl.value += button.textContent
+    })
 })
 
-addBtn.addEventListener('click', function(){
-    if(input.value.trim() === ''){
-        errorMsg.textContent = "Enter Task"
-        return
-    }
-    errorMsg.textContent = ''
-    
-    let li = document.createElement('li')
-    li.textContent = input.value 
-    list.appendChild(li)
+operatorButtons.forEach(function(cal){
+    cal.addEventListener('click', function(){
+        inputEl.value += " " + cal.textContent + " "
+    })
+})
 
-    input.value = ''
+delEl.addEventListener('click', function(){
+    inputEl.value = inputEl.value.slice(0, -1)
+})
+
+decimalEl.addEventListener('click', function(){
+     inputEl.value += decimalEl.textContent
+})
+
+percentEl.addEventListener('click', function(){
+   inputEl.value = parseFloat(inputEl.value) / 100
+})
+
+clearEl.addEventListener('click', function(){
+    inputEl.value= " "
+})
+equalEl.addEventListener('click', function(){
+    try {        inputEl.value = eval(inputEl.value)
+    } 
+    catch (error) {
+        inputEl.value = "Error"
+    }  
 })
